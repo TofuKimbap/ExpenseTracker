@@ -52,6 +52,10 @@ html {
   margin-top: .5rem;
 }
 
+.dropdown:focus {
+  outline: none
+}
+
 .btn {
   font-size: .8rem;
   width: 4rem;

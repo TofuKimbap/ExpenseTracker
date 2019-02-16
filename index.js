@@ -71,6 +71,7 @@ function onFormSubmit(event) {
       }
       event.target.elements[i].value = ""
     }
+    updateCharts()
   }
 }
 
@@ -93,6 +94,7 @@ function onCategoryRemove(event) {
   removeBillsWith(expenses, value)
   loadCategory(expenses)
   loadTable(expenses)
+  updateCharts()
 }
 
 function onClickSort(event) {
@@ -101,6 +103,7 @@ function onClickSort(event) {
   const expenses = loadData()
 
   sortBillsBy(expenses, keyword)
+  updateCharts()
 }
 
 function onClickDelete(event) {
@@ -111,6 +114,8 @@ function onClickDelete(event) {
 
   saveData(expenses)
   loadTable(expenses)
+  addDeleteHandler()
+  updateCharts()
 }
 
 // Event Listener for Dynamic Delete Elements
@@ -127,7 +132,36 @@ function addDeleteHandler() {
 
 function loadData() {
   const example_expenses = {
-    bills: [], 
+    bills: [
+      {
+        amount: 10,
+        category: "Food",
+        date: "2019-01-04",
+        description: "Pizza",
+        id: "2019-01-04PizzaFood100.44793901387493196"
+      },
+      {
+        amount: 5,
+        category: "Food",
+        date: "2019-01-05",
+        description: "Egg",
+        id: "2019-01-05EggFood50.3767270936665854"
+      },
+      {
+        amount: 10,
+        category: "Electronic",
+        date: "2019-01-07",
+        description: "Hairdryer",
+        id: "2019-01-07HairdryerElectronic100.8916893624568858"
+      },
+      {
+        amount: 4,
+        category: "Food",
+        date: "2019-01-09",
+        description: "Döner",
+        id: "2019-01-09DönerFood40.6601415974956448"
+      },
+    ], 
     sortBy: "date", 
     order: {
       date: "descending",
@@ -139,6 +173,12 @@ function loadData() {
   }
 
   const expenses = JSON.parse(localStorage.getItem("Expenses")) || example_expenses
+
+  // Convert Number Strings into Numbers
+  expenses.bills = expenses.bills.map(bill => {
+    bill.amount = Number(bill.amount)
+    return bill
+  })
   
   return expenses
 }
@@ -257,9 +297,6 @@ function generateID(bill) {
 
 // Caculate Expenses for Charts
 
-let daily_keys = Object.keys(dailyAmount())
-let daily_values = Object.values(dailyAmount())
-
 function dailyAmount() {
   const expenses = loadData()
 
@@ -298,6 +335,20 @@ function categoricalAmount() {
   return daily_array
 }
 
+// Update Charts
+
+function updateCharts() {
+  myChart.data.labels = Object.keys(dailyAmount())
+  myChart.data.datasets[0].data = Object.values(dailyAmount())
+  myChart.update()
+
+  myChart2.data.labels = Object.keys(categoricalAmount())
+  myChart2.data.datasets[0].data = Object.values(categoricalAmount())
+  myChart2.update()
+}
+
+
+
 // UI
 
 function loadCategory(expenses) {
@@ -334,9 +385,9 @@ var ctx = document.getElementById("myChart");
 var myChart = new Chart(ctx, {
   type: 'line',
   data: {
-      labels: daily_keys,
+      labels: Object.keys(dailyAmount()),
       datasets: [{
-          data: daily_values,
+          data: Object.values(dailyAmount()),
           
           borderWidth: 1
       }]
