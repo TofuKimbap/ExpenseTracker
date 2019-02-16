@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39+Text|Roboto:300,400,700" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <!-- Chartjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+  <title>Expense Tracker</title>
+</head>
+<body>
+  <header>
+    <h1 align="center" class="header">Expense Tracker</h1>
+  </header>
+  <section>
+    <form class="form">
+      <div class="form-block">
+        <label for='date' class="form-label">Date</label>
+        <input type='date' name='date' id='date' class="form-input"/>
+      </div>
+      <div class="form-block">
+        <label for='description' class="form-label">Description</label>
+        <input type='text' name='description' class="form-input" />
+      </div>
+      <div class="form-block">
+        <label for='category' class="form-label">Category</label>
+        <select id='category' class="dropdown" name="category">
+          <option />
+        </select>
+      </div>
+      <div class="form-block">
+        <label for='amount' class="form-label">Amount</label>
+        <input type='number' name='amount' id='amount' class="form-input" />
+      </div>
+      <button type="submit" class="btn" style="position:relative; top: .7rem">Add</button>
+    </form>
+  </section>
+
+  <section>
+    <div class="category-form">
+      <form class="form-block" id="category_add">
+        <label for='add_category' class="form-label">Category</label>
+        <input type='text' name='add_category' id='add_category' class="form-input"/>
+        <button type="submit" class="btn">Add</button>
+      </form>
+      <form class="form-block" id="category_remove">
+        <label for='remove_category' class="form-label">Category</label>
+        <select name="remove_category" id="remove_category" class="dropdown">
+          <option />
+        </select>
+        <button type="submit" class="btn">Remove</button>
+      </form>
+    </div>
+  </section>
+
+  <section>
+    <div class="chart-container">
+      <canvas id="myChart" width="600px" height="400px"></canvas>
+      <canvas id="myChart2" width="600px" height="400px"></canvas>
+    </div>
+  </section>
+
+  <section>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date <i class="fas fa-sort sort-btn" data-keyword="date"></i></th>
+          <th>Description <i class="fas fa-sort sort-btn" data-keyword="description"></i></th>
+          <th>Category <i class="fas fa-sort sort-btn" data-keyword="category"></i></th>
+          <th>Amount <i class="fas fa-sort sort-btn" data-keyword="amount"></i></th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+      </tbody>
+    </table>
+  </section>
+  <footer>
+
+  </footer>
+  <script src='index.js'></script>
+</body>
+</html>
